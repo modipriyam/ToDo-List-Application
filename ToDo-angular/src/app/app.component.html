@@ -1,0 +1,96 @@
+<div class="container .bg-primary">
+<div class="row">
+  <div class="center">
+    <br>
+    <div class="col-md-12">
+      <h2 class = "heading">
+        Manage Your Todo's
+      </h2>
+    </div>
+    <br>
+  </div>
+</div>
+  <div class="p-3 mb-2 bg-dark text-white">
+    <br>
+    <br>
+  <form>
+    <div class="form-row" >
+      <div class="col-md-3">
+        <input type="text" name="title" id="title" [(ngModel)]="newTask.title" placeholder="Your To-Do Title" class="form-control">
+      </div>
+      <div class="col-md-3">
+        <input name="description" id="description" [(ngModel)]="newTask.description" placeholder="Your To-Do Description" class="form-control" id="description">
+      </div>
+      <div class="col-md-3">
+        <input type = "date" name="type" id="type" [(ngModel)]="newTask.type" placeholder="Date" class="form-control" >
+      </div>
+      <div class="col-md-3">
+        <input type = "time" name="type2" id="type2" [(ngModel)]="newTask.type2" placeholder="Date" class="form-control" >
+      </div>
+      <br>
+      <br>
+      <br>
+      <div class="col-md-12">
+          <button type="submit" class="btn btn-primary form-control" (click)="createTask()" >Add</button>
+      </div>
+      <br>
+      <br>
+      <br>
+    </div>
+  </form>
+  </div>
+  <div class="col-md-12">
+
+    <div class="todos" *ngIf="toDoList">
+      <table class="table">
+        <thead class="h">
+          <tr class="h">
+            <th class="tableheading">Title</th>
+            <th class="tableheading">Description</th>
+            <th class="tableheading">Due Date</th>
+            <th class="tableheading">Time of Action</th>
+            <th class="tableheading">Status</th>
+            <th class="tableheading">Flag and Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="task" (dblclick)="editTask(task)" *ngFor="let task of toDoList">
+            <ng-container *ngIf="!editTasks.includes(task); else editTD">
+              <td>{{task.title}}</td>
+              <td>{{task.description}}</td>
+              <!-- <td>{{task.date | date}}</td> -->
+              <td>{{task.type}}</td>
+              <td>{{task.type2}}</td>
+              <td>{{task.status}}</td>
+            </ng-container>
+            <ng-template #editTD>
+              <td>
+                <input type="text" name="title" id="title" (keypress)="submitTask($event, task)" [(ngModel)]="task.title" placeholder="Title" class="form-control">
+              </td>
+              <td>
+                <input type="text" name="description" id="description" (keypress)="submitTask($event, task)" [(ngModel)]="task.description" placeholder="Description" class="form-control">
+              </td>
+              <td>
+                <input type="date" name="type" id="type" (keypress)="submitTask($event, task)" [(ngModel)]="task.type" placeholder="Date" class="form-control" >
+              </td>
+              <td>
+                <input type="time" name="type" id="type2" (keypress)="submitTask($event, task)" [(ngModel)]="task.type2" placeholder="time" class="form-control" >
+              </td>
+              <td>
+                <input type="text" name="status" id="status" (keypress)="submitTask($event, task)" [(ngModel)]="task.status" placeholder="Status" class="form-control">
+              </td>
+            </ng-template>
+            <td class="o">
+              <button class="" (click)="doneTask(task)">
+                <i class="fa fa-flag"></i>
+              </button>
+              <button class="" (click)="deleteTask(task)">
+                <i class="fa fa-minus-square"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
